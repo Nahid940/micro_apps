@@ -12,4 +12,4 @@ COPY . .
 RUN curl -sS https://getcomposer.org/installer | php \
     && php composer.phar install
 
-CMD ["php-fpm"]
+CMD ["php-fpm", "-F"]
