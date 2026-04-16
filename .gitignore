@@ -1,0 +1,14 @@
+# Laravel
+/vendor
+/node_modules
+.env
+
+# Docker logs
+*.log
+
+# OS
+.DS_Store
+
+# IDE
+.vscode
+.idea
