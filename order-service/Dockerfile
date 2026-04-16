@@ -5,6 +5,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install pdo pdo_mysql
 
+RUN docker-php-ext-install sockets
+
 WORKDIR /var/www
 
 COPY . .
