@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('orders')->group(function () {
     Route::get('/test-call', function () {
         echo "from order";
-        // return Http::get('http://user-service:9000/api/all')->json();
     });
 });
 
