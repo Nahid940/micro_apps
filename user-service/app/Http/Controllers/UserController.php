@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
 use App\Services\UserService;
-use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
@@ -18,23 +17,24 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        try{
-            $data = [
-                'name'  => $request->name,
-                'email' => $request->email,
-            ];
-            $response = $this->userService->create($data);
+        try {
+            $user = $this->userService->create($request->validated());
 
-            if($response){
-                return response()->json(["status" => 201, "message" => "Successful!"]);
-            }
+            return response()->json([
+                'message' => 'User created successfully',
+                'data' => $user
+            ], 201);
 
-        }catch(Exception $ex)
-        {
-            Log::info($ex->getMessage());
-            return response()->json(["status" => 200, "message" => "Error!"]);
+        } catch (\Throwable $e) {
+            Log::error('User creation failed', [
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], 500);
         }
     }
 }
